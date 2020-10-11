@@ -2,18 +2,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class CheckoutTest {
-private Checkout checkout;
+    private Checkout checkout;
+    private Item item;
 
     @BeforeEach
     public void setup(){
         this.checkout = new Checkout();
+        this.item = new Item("001", "Travel Card Holder", new BigDecimal("9.25"));
     }
 
     @Test
-    @DisplayName("Test adding item to basket")
-    public void addItemTest(){
-
+    @DisplayName("Test adding/scanning item to checkout")
+    public void scanItemTest(){
+        checkout.scan(item);
+        assertNotNull(checkout.getItems());
+        assertFalse(checkout.getItems().isEmpty());
+        assertEquals(item, checkout.getItems()
+                .stream()
+                .findFirst()
+                .orElse(null));
     }
 
     @Test
