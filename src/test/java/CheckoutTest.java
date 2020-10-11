@@ -3,10 +3,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CheckoutTest {
+private Checkout checkout;
 
     @BeforeEach
     public void setup(){
-
+        this.checkout = new Checkout();
     }
 
     @Test
