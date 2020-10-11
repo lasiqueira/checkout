@@ -1,3 +1,5 @@
+package checkout;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -56,7 +58,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "checkout.Item{" +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +
