@@ -23,6 +23,7 @@ public class XPoundsAfterYProductsDiscount implements Discount{
         BigDecimal discount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         List<BigDecimal> discountedList = filterProductPrice(items);
         if(discountedList.size() >= quantity){
+            updateItems(items);
             discount = discountedList.stream()
                     .reduce(BigDecimal.ZERO, BigDecimal::add)
                     .subtract(value.multiply(BigDecimal.valueOf(discountedList.size())))
@@ -37,5 +38,13 @@ public class XPoundsAfterYProductsDiscount implements Discount{
                 .filter(item -> item.getCode().equals(productCode))
                 .map(Item::getPrice)
                 .collect(Collectors.toList());
+    }
+
+    private void updateItems(List<Item> items){
+        for(Item item : items){
+            if(item.getCode().equals(productCode)){
+                item.setPrice(value);
+            }
+        }
     }
 }

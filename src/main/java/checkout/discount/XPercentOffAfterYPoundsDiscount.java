@@ -20,7 +20,7 @@ public class XPercentOffAfterYPoundsDiscount implements Discount {
         BigDecimal total = getTotal(items);
         BigDecimal discount = BigDecimal.ZERO;
         if(total.compareTo(value) >= 0){
-            discount =  total.multiply(percentage).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP);
+            discount =  total.multiply(percentage).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_DOWN);
         }
         return discount;
     }
