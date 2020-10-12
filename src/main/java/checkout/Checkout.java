@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Checkout {
     private final List<Item> items;
+    //This allows multiple discount schemes to be applied
     private final List<Discount> discounts;
 
     public Checkout() {
@@ -30,6 +31,7 @@ public class Checkout {
         items.add(item);
     }
 
+    //This gets the total price from the items - the discounts. If there are no discounts nothing will be subtracted.
     public Double total(){
         return items.stream()
                 .map(Item::getPrice)
@@ -38,6 +40,7 @@ public class Checkout {
                 .setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
+    //get a sum of total discount to be later subtracted to the total
     private BigDecimal getDiscount(){
         return discounts.stream()
                 .map(discount -> discount.getDiscount(items))

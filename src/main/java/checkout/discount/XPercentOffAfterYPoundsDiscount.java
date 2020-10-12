@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+//Made the discount itself configurable in case you want different percentages or a different amount
 public class XPercentOffAfterYPoundsDiscount implements Discount {
     private final BigDecimal percentage;
     private final BigDecimal value;
