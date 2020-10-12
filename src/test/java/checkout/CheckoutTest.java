@@ -88,6 +88,28 @@ public class CheckoutTest {
     @Test
     @DisplayName("Test getting total with multiple discounts")
     public void getTotalWithMultipleDiscounts(){
+        Discount discountA = new XPoundsAfterYProductsDiscount("001", BigDecimal.valueOf(8.50), 2);
+        Discount discountB = new XPercentOffAfterYPoundsDiscount(BigDecimal.TEN, BigDecimal.valueOf(60));
+        Checkout checkout = new Checkout(List.of(discountA, discountB));
+
+        Item itemA = new Item("001", "Travel Card Holder", new BigDecimal("9.25"));
+        Item itemB = new Item("001", "Travel Card Holder", new BigDecimal("9.25"));
+        Item itemC = new Item("002", "Personalised cufflinks", new BigDecimal("45.00"));
+        Item itemD = new Item("002", "Personalised cufflinks", new BigDecimal("45.00"));
+
+        checkout.scan(itemA);
+        checkout.scan(itemB);
+        checkout.scan(itemC);
+        checkout.scan(itemD);
+
+        BigDecimal total = itemA.getPrice().add(itemB.getPrice()).add(itemC.getPrice()).add(itemD.getPrice()).setScale(2, RoundingMode.HALF_UP);
+        Double expected = total.subtract(
+                itemA.getPrice().multiply(BigDecimal.valueOf(2)).subtract(BigDecimal.valueOf(8.50).multiply(BigDecimal.valueOf(2))))
+                .subtract(total.multiply(BigDecimal.valueOf(10)).divide(BigDecimal.valueOf(100)))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+        Double actual = checkout.total();
+        assertEquals(expected, actual);
 
     }
 
