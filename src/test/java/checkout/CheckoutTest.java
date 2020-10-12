@@ -64,7 +64,7 @@ public class CheckoutTest {
     }
 
     @Test
-    @DisplayName("Test getting total with £8.50 checkout.discount after 2+ products")
+    @DisplayName("Test getting total with £8.50 discount after 2+ products")
     public void getTotalWith850After2PlusDiscount(){
 
     }
