@@ -2,6 +2,7 @@ package checkout;
 
 import checkout.discount.Discount;
 import checkout.discount.XPercentOffAfterYPoundsDiscount;
+import checkout.discount.XPoundsAfterYProductsDiscount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -66,7 +67,22 @@ public class CheckoutTest {
     @Test
     @DisplayName("Test getting total with £8.50 discount after 2+ products")
     public void getTotalWith850After2PlusDiscount(){
+        Discount discount = new XPoundsAfterYProductsDiscount("001", BigDecimal.valueOf(8.50), 2);
+        Checkout checkout = new Checkout(List.of(discount));
+        Item itemA = new Item("001", "Travel Card Holder", new BigDecimal("9.25"));
+        Item itemB = new Item("001", "Travel Card Holder", new BigDecimal("9.25"));
 
+        checkout.scan(itemA);
+        checkout.scan(itemB);
+
+        BigDecimal total = itemA.getPrice().add(itemB.getPrice());
+        Double expected = total.subtract(
+                itemA.getPrice().multiply(BigDecimal.valueOf(2)).subtract(BigDecimal.valueOf(8.50).multiply(BigDecimal.valueOf(2))))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+        Double actual = checkout.total();
+
+        assertEquals(expected, actual);
     }
 
     @Test
