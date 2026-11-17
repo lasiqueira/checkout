@@ -51,4 +51,6 @@ Same if I want to change the price of a given product if there are X of them in 
 
 ## Build
 
-`gradlew clean build`
+Requires JDK 25 (configured as a Gradle toolchain); Gradle 9.9.1 is provided by the wrapper.
+
+`./gradlew clean build`
